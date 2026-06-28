@@ -7,10 +7,8 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
 
 const app = express()
 app.use(express.json())
-app.use(cors(
-    options=>{
-        options.origin="https://task-tracker-kss6.vercel.app/"
-    }
+app.use(cors({
+    origin:"https://task-tracker-kss6.vercel.app/"
 ))
 app.use(express.urlencoded({ extended: true }));
 
