@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const taskApi = axios.create({
-    baseURL:"http://localhost:3000/api/tasks",
+    baseURL:"https://task-tracker-phi-six-88.vercel.app/api/tasks",
 })
 
 export default taskApi
