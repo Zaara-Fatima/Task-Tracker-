@@ -9,7 +9,7 @@ const app = express()
     dotenv.config()
 app.use(express.json())
 app.use(cors({
-    origin:["https://task-tracker-kss6.vercel.app", "http://localhost:5173"]
+    origin:["https://task-tracker-zc7a.vercel.app", "http://localhost:5173"]
 }))
 app.use(express.urlencoded({ extended: true }));
 
