@@ -44,7 +44,7 @@ export const TaskForm = ({onaddTask, editingTask,
       _id: editingTask._id,
     });
   } else {
-    await onAddTask(taskform);
+    await onaddTask(taskform);
   }
 
    setTaskform({
