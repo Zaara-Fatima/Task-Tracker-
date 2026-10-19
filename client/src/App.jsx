@@ -1,19 +1,23 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import {Home} from './pages/Home';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Logout from "./pages/Logout";
+import { useState } from "react";
 
 function App() {
+  const [user, setUser] = useState(null);
+
   return (
     <BrowserRouter>
       <Routes>
-                <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={user ? <Home /> : <Login onLoginSuccess={setUser} />} />
+        <Route path="/login" element={<Login onLoginSuccess={setUser} />} />
         <Route path="/register" element={<Register />} />
-        </Routes>
+        <Route path="/logout" element={<Logout />} />
+      </Routes>
     </BrowserRouter>
   );
 }
-export default App;
 
+export default App;
