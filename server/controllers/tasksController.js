@@ -2,8 +2,9 @@ import Task from "../models/Tasks.js";
 
 export const getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({});
-    res.json(tasks);
+    const tasks = await Task.find({ user: req.user._id });
+    res.status(200).json(tasks);
+    console.log(error)
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
@@ -13,21 +14,22 @@ export const createTasks = async (req, res) => {
   try {
     const { title, description, status, priority, dueDate } = req.body;
     if (!title) {
-      return res.status(400).json({
-        message: "Title is required",
-      });
+      return res.status(400).json({ message: "Title is required" });
     }
+
     const task = new Task({
+      user: req.user._id,
       title,
       description,
       status,
       priority,
       dueDate,
     });
+    const createdTask = await task.save();
 
-    const createdtask = await task.save();
-    res.json(201).json(createdTasks);
+    res.status(201).json(createdTask);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -38,6 +40,7 @@ export const updateTask = async (req, res) => {
     if (!task) {
       return res.status(404).json({ message: "Task Not Found" });
     }
+
     task.title = req.body.title || task.title;
     task.description = req.body.description || task.description;
     task.status = req.body.status || task.status;
@@ -45,7 +48,7 @@ export const updateTask = async (req, res) => {
     task.dueDate = req.body.dueDate || task.dueDate;
 
     const updatedTask = await task.save();
-    res.status(200).json(updateTask);
+    res.status(200).json(updatedTask);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }

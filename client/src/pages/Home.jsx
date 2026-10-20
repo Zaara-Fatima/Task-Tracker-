@@ -62,8 +62,14 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    fetchtasks();
-  }, []);
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/login"); // redirect if not logged in
+    return;
+  }
+  fetchtasks();
+}, [navigate]);
+
 
   return (
     <main className="min-h-screen bg-[#0f1117] text-white">

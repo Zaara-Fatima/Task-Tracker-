@@ -10,7 +10,8 @@ const app = express()
 dotenv.config()
 app.use(express.json())
 app.use(cors({
-    origin: ["http://localhost:5173","https://task-tracker-zc7a-git-main-zaara-fatimas-projects.vercel.app/"]
+    origin: ["http://localhost:5173","https://task-tracker-zc7a-git-main-zaara-fatimas-projects.vercel.app/"],
+    credentials: true
 }
 ))
 app.use(express.urlencoded({ extended: true }));

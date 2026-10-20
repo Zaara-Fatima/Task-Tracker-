@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Logout from "./pages/Logout";
+import {Home} from "./pages/Home";
+import {Login }from "./pages/Login";
+import{ Register} from "./pages/Register";
 import { useState } from "react";
 
 function App() {
@@ -14,7 +13,6 @@ function App() {
         <Route path="/" element={user ? <Home /> : <Login onLoginSuccess={setUser} />} />
         <Route path="/login" element={<Login onLoginSuccess={setUser} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
   );

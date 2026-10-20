@@ -1,17 +1,13 @@
 import axios from "axios";
 
 const taskApi = axios.create({
-  baseURL: "https://task-tracker-chi-bice.vercel.app/api/",
+  baseURL: "http://localhost:3000/api",
   withCredentials: true, // allows cookies if you want to rely on httpOnly cookie
 });
 
 // Request interceptor: attach token if present
 taskApi.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     return config;
   },
   (error) => Promise.reject(error)

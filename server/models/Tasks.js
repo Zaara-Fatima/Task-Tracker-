@@ -4,7 +4,7 @@ const taskSchema=new mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required
+        required: true
     },
     title:{
         type:String,
