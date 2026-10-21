@@ -50,13 +50,13 @@ export const loginController = async (req, res, next) => {
       { expiresIn: process.env.ACCESS_EXPIRE || "7d" }
     )
 
-    res.cookie("accessToken", accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      sameSite: "lax",
-      maxAge: 7 * 24 * 60 * 60 * 1000, 
-    })
+   res.cookie("accessToken", accessToken, {
+  httpOnly: true,
+  sameSite: "lax",
+  secure: true,
+  path:'/',
+  maxAge: 7 * 24 * 60 * 60 * 1000, 
+});
 
     res.status(200).json({
       message: "Login successful",

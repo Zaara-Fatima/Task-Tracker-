@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const taskApi = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "/api",
   withCredentials: true, // allows cookies if you want to rely on httpOnly cookie
 });
 
