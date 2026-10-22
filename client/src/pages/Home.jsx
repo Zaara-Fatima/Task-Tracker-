@@ -33,11 +33,11 @@ export const Home = () => {
     try {
       const { data } = await taskApi.put(
         `/tasks/${updatedTask._id}`,
-        updatedTask
+        updatedTask,
       );
 
       setTasks((prevTasks) =>
-        prevTasks.map((task) => (task._id === data._id ? data : task))
+        prevTasks.map((task) => (task._id === data._id ? data : task)),
       );
 
       setEditingTask(null);
@@ -56,20 +56,25 @@ export const Home = () => {
   };
 
   // 🔑 Logout handler
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // clear JWT or session token
-    navigate("/login"); // redirect to login page
+  const handleLogout = async () => {
+    await taskApi.post("/auth/logout");
+
+    navigate("/login");
   };
 
   useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    navigate("/login"); // redirect if not logged in
-    return;
-  }
-  fetchtasks();
-}, [navigate]);
+    const checkAuth = async () => {
+      try {
+        await taskApi.get("/auth/me");
 
+        await fetchtasks();
+      } catch (err) {
+        navigate("/login");
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
 
   return (
     <main className="min-h-screen bg-[#0f1117] text-white">

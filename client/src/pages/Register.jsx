@@ -17,8 +17,6 @@ export const Register = ({ onRegisterSuccess }) => {
 
     try {
       const { data } = await taskApi.post("/auth/register", formData);
-      // Assuming API returns { token, user }
-      localStorage.setItem("token", data.token);
       onRegisterSuccess(data.user); // Pass user info back to parent
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");

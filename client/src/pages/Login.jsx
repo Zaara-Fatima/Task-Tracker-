@@ -20,9 +20,6 @@ export const Login = ({ onLoginSuccess }) => {
     try {
       const { data } = await taskApi.post("/auth/login", formData);
 
-      // Save token from backend response
-      localStorage.setItem("token", data.accessToken);
-
       // Pass user info back to parent (for global state or redirect)
       onLoginSuccess(data.user);
       navigate('/')

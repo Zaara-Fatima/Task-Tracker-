@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {Home} from "./pages/Home";
-import {Login }from "./pages/Login";
-import{ Register} from "./pages/Register";
+import { Home } from "./pages/Home";
+import { Login } from "./pages/Login";
+import { Register } from "./pages/Register";
 import { useState } from "react";
 
 function App() {
@@ -10,9 +10,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={user ? <Home /> : <Login onLoginSuccess={setUser} />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login onLoginSuccess={setUser} />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={<Register onRegisterSuccess={setUser}/>}
+          
+        />
       </Routes>
     </BrowserRouter>
   );
