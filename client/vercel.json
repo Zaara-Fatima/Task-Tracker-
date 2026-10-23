@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://task-tracker-3f8o.onrender.com/api/$1"
+    }
+  ]
+}
