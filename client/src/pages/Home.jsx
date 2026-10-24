@@ -69,7 +69,7 @@ export const Home = () => {
 
         await fetchtasks();
       } catch (err) {
-        navigate("/login");
+        navigate("/register");
       }
     };
 

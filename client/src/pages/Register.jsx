@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import taskApi from "../services/taskApi";
+import { useNavigate } from "react-router-dom";
 
 export const Register = ({ onRegisterSuccess }) => {
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -81,6 +83,9 @@ export const Register = ({ onRegisterSuccess }) => {
             {loading ? "Registering..." : "Register"}
           </button>
         </form>
+        <p>Already have an account?  
+          <button onClick={()=>navigate('/login')}> Login</button>
+        </p>
       </div>
     </main>
   );
