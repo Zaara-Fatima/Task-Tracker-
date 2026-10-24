@@ -20,7 +20,7 @@ export const Register = ({ onRegisterSuccess }) => {
     try {
       const { data } = await taskApi.post("/auth/register", formData);
       onRegisterSuccess(data.user);
-      navigate('/') // Pass user info back to parent
+      navigate('/login') // Pass user info back to parent
     } catch (err) {
       setError(err.response?.data?.message || "Registration failed");
     } finally {
