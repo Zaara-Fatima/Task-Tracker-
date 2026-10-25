@@ -3,7 +3,7 @@ export const TaskCard = ({ task, onDelete, onEdit }) => {
     <div className="rounded-2xl bg-[#1a1d26] p-5">
       <h3 className="text-xl font-semibold">{task.title}</h3>
 
-      <p className="mt-2 text-gray-400">{task.decription}</p>
+      <p className="mt-2 text-gray-400">{task.description}</p>
 
       <div className="mt-5 flex flex-wrap gap-3">
         <span className="rounded-full bg-yellow-500/20 px-3 py-1 text-sm text-yellow-400">
