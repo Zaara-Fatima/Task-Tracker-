@@ -17,6 +17,8 @@ export const createTasks = async (req, res) => {
       return res.status(400).json({ message: "Title is required" });
     }
 
+    console.log(req.file?.path)
+
     const task = new Task({
       user: req.user.id,
       title,
@@ -47,6 +49,10 @@ export const updateTask = async (req, res) => {
     task.status = req.body.status || task.status;
     task.priority = req.body.priority || task.priority;
     task.dueDate = req.body.dueDate || task.dueDate;
+
+    if (req.file) {
+  task.image = req.file.path;
+}
 
     const updatedTask = await task.save();
     res.status(200).json(updatedTask);
