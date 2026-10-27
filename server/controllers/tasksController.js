@@ -4,20 +4,23 @@ export const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id });
     res.status(200).json(tasks);
-    console.log(error)
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
 
 export const createTasks = async (req, res) => {
   try {
+    console.log("BODY:", req.body);
+    console.log("USER:", req.user);
+    console.log("FILE:", req.file);
     const { title, description, status, priority, dueDate } = req.body;
     if (!title) {
       return res.status(400).json({ message: "Title is required" });
     }
 
-    console.log(req.file?.path)
+    console.log(req.file?.path);
 
     const task = new Task({
       user: req.user.id,
@@ -51,8 +54,8 @@ export const updateTask = async (req, res) => {
     task.dueDate = req.body.dueDate || task.dueDate;
 
     if (req.file) {
-  task.image = req.file.path;
-}
+      task.image = req.file.path;
+    }
 
     const updatedTask = await task.save();
     res.status(200).json(updatedTask);

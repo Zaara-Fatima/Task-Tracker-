@@ -6,7 +6,7 @@ import connectDB from "./db/db.js"
 import dotenv from "dotenv"
 dotenv.config()
 import cookieParser from "cookie-parser"
-import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
+import {  errorHandler } from "./middleware/errorMiddleware.js"
 
 
 
@@ -23,7 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/tasks", tasksRouter);
 app.use("/api/auth", authRoutes);
-app.use(notFound);
 app.use(errorHandler);
 
 
