@@ -4,17 +4,18 @@ import tasksRouter from "./routes/tasksRouter.js"
 import authRoutes from "./routes/authRoutes.js"
 import connectDB from "./db/db.js"
 import dotenv from "dotenv"
+dotenv.config()
 import cookieParser from "cookie-parser"
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js"
 
 
 
 const app = express()
-dotenv.config()
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: ["http://localhost:5173","https://task-tracker-zc7a-git-main-zaara-fatimas-projects.vercel.app/"],
+    origin: ["http://localhost:5173","https://task-tracker-zc7a-git-main-zaara-fatimas-projects.vercel.app"],
     credentials: true
 }
 ))

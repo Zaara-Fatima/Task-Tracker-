@@ -6,12 +6,13 @@ import {
   updateTask,
 } from "../controllers/tasksController.js";
 import { protect } from "../middleware/authMiddleware.js";
+import { upload } from "../middleware/multerCloudinary.js";
 
 const router = express.Router();
 
-router.post("/", protect, createTasks);
+router.post("/", protect, upload.single("image"), createTasks);
 router.get("/", protect, getTasks);
-router.put("/:id", protect, updateTask);
+router.put("/:id", protect, upload.single("image"), updateTask);
 router.delete("/:id", protect, deleteTask);
 
 export default router;

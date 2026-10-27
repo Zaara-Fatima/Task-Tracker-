@@ -23,6 +23,10 @@ const taskSchema=new mongoose.Schema({
         enum:["Low", "Medium","High"],
         default:"Low"
     },
+    image: {
+    type: String,
+    default: "",
+  },
     dueDate:Date
 },{
     timestamps:true,

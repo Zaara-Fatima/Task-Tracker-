@@ -24,6 +24,7 @@ export const createTasks = async (req, res) => {
       status,
       priority,
       dueDate,
+      image: req.file?.path || "",
     });
     const createdTask = await task.save();
 

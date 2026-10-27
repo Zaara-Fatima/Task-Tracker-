@@ -1,6 +1,13 @@
 export const TaskCard = ({ task, onDelete, onEdit }) => {
   return (
     <div className="rounded-2xl bg-[#1a1d26] p-5">
+      {task.image && (
+        <img
+          src={task.image}
+          alt={task.title}
+          className="h-40 w-full object-cover rounded-lg"
+        />
+      )}
       <h3 className="text-xl font-semibold">{task.title}</h3>
 
       <p className="mt-2 text-gray-400">{task.description}</p>
@@ -20,11 +27,17 @@ export const TaskCard = ({ task, onDelete, onEdit }) => {
       </div>
 
       <div className="mt-6 flex justify-end gap-3">
-        <button className="rounded-lg border border-violet-500 px-4 py-2" onClick={()=>onEdit(task)}>
+        <button
+          className="rounded-lg border border-violet-500 px-4 py-2"
+          onClick={() => onEdit(task)}
+        >
           Edit
         </button>
 
-        <button className="rounded-lg border border-red-500 px-4 py-2" onClick={()=>onDelete(task._id)}>
+        <button
+          className="rounded-lg border border-red-500 px-4 py-2"
+          onClick={() => onDelete(task._id)}
+        >
           Delete
         </button>
       </div>

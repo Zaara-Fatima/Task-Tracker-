@@ -1,63 +1,77 @@
 import { useState, useEffect } from "react";
 
-export const TaskForm = ({onaddTask, editingTask,
-    setEditingTask, onUpdateTask}) => {
+export const TaskForm = ({
+  onaddTask,
+  editingTask,
+  setEditingTask,
+  onUpdateTask,
+}) => {
   const [taskform, setTaskform] = useState({
     title: "",
     description: "",
     status: "Pending",
     priority: "Low",
+    image: null,
     dueDate: "",
   });
 
   useEffect(() => {
     if (editingTask) {
-        setTaskform({
-            title: editingTask.title,
-            description: editingTask.description,
-            status: editingTask.status,
-            priority: editingTask.priority,
-            dueDate: editingTask.dueDate
-                ? editingTask.dueDate.split("T")[0]
-                : "",
-        });
+      setTaskform({
+        title: editingTask.title,
+        description: editingTask.description,
+        status: editingTask.status,
+        priority: editingTask.priority,
+        dueDate: editingTask.dueDate ? editingTask.dueDate.split("T")[0] : "",
+        image: null,
+      });
     }
-}, [editingTask]);
+  }, [editingTask]);
 
-  const handleChange=(e)=>{
+  const handleChange = (e) => {
     setTaskform({
-        ...taskform,
-        [e.target.name]: e.target.value
-    })
-  }
-  const handleSubmit = async (e) => {
-  e.preventDefault();
+      ...taskform,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-  if(!taskform.title.trim()){
-    alert("Title is required");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!taskform.title.trim()) {
+      alert("Title is required");
+      return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("title", taskform.title);
+    formData.append("description", taskform.description);
+    formData.append("status", taskform.status);
+    formData.append("priority", taskform.priority);
+    formData.append("dueDate", taskform.dueDate);
+
+    if (taskform.image) {
+      formData.append("image", taskform.image);
+    }
 
     if (editingTask) {
-    await onUpdateTask({
-      ...taskform,
-      _id: editingTask._id,
+      await onUpdateTask(formData, editingTask._id);
+    } else {
+      await onaddTask(formData);
+    }
+
+    setTaskform({
+      title: "",
+      description: "",
+      status: "Pending",
+      priority: "Low",
+      image: null,
+      dueDate: "",
     });
-  } else {
-    await onaddTask(taskform);
-  }
 
-   setTaskform({
-    title: "",
-    description: "",
-    status: "Pending",
-    priority: "Low",
-    dueDate: "",
-  });
-
-  setEditingTask(null);
-};
-
+    setEditingTask(null);
+  };
 
   return (
     <section className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6 shadow-lg">
@@ -71,14 +85,12 @@ export const TaskForm = ({onaddTask, editingTask,
             <label className="mb-2 block text-sm font-medium">Title</label>
 
             <input
-            name="title"
+              name="title"
               type="text"
               placeholder="Enter task title"
               className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 outline-none transition focus:border-violet-500"
               value={taskform.title}
-              onChange={
-                handleChange
-              }
+              onChange={handleChange}
             />
           </div>
 
@@ -87,7 +99,12 @@ export const TaskForm = ({onaddTask, editingTask,
           <div>
             <label className="mb-2 block text-sm font-medium">Status</label>
 
-            <select className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 outline-none focus:border-violet-500" value={taskform.status} onChange={handleChange} name="status">
+            <select
+              className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 outline-none focus:border-violet-500"
+              value={taskform.status}
+              onChange={handleChange}
+              name="status"
+            >
               <option>Pending</option>
               <option>In-Progress</option>
               <option>Completed</option>
@@ -101,7 +118,7 @@ export const TaskForm = ({onaddTask, editingTask,
           <label className="mb-2 block text-sm font-medium">Description</label>
 
           <textarea
-          name="description"
+            name="description"
             rows="4"
             placeholder="Enter task description"
             className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 outline-none focus:border-violet-500"
@@ -116,11 +133,42 @@ export const TaskForm = ({onaddTask, editingTask,
           <div>
             <label className="mb-2 block text-sm font-medium">Priority</label>
 
-            <select className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 outline-none focus:border-violet-500" value={taskform.priority} onChange={handleChange} name="priority">
+            <select
+              className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3 outline-none focus:border-violet-500"
+              value={taskform.priority}
+              onChange={handleChange}
+              name="priority"
+            >
               <option>Low</option>
               <option>Medium</option>
               <option>High</option>
             </select>
+          </div>
+
+          {/* {ImageUpload} */}
+
+          <div>
+            <label className="mb-2 block text-sm font-medium">Task Image</label>
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) =>
+                setTaskform({
+                  ...taskform,
+                  image: e.target.files[0],
+                })
+              }
+              className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-3"
+            />
+
+            {taskform.image instanceof File && (
+              <img
+                src={URL.createObjectURL(taskform.image)}
+                alt="preview"
+                className="mt-3 h-32 w-32 rounded-lg object-cover"
+              />
+            )}
           </div>
 
           {/* Due Date */}
@@ -138,8 +186,11 @@ export const TaskForm = ({onaddTask, editingTask,
           </div>
         </div>
 
-        <button className="w-full rounded-lg bg-violet-600 py-3 font-semibold transition hover:bg-violet-700" type="submit">
-         {editingTask ? "Update Task" : "Add Task"}
+        <button
+          className="w-full rounded-lg bg-violet-600 py-3 font-semibold transition hover:bg-violet-700"
+          type="submit"
+        >
+          {editingTask ? "Update Task" : "Add Task"}
         </button>
       </form>
     </section>
