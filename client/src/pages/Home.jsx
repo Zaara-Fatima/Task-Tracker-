@@ -29,22 +29,26 @@ export const Home = () => {
     }
   };
 
-  const updateTask = async (updatedTask) => {
-    try {
-      const { data } = await taskApi.put(
-        `/tasks/${updatedTask._id}`,
-        updatedTask,
-      );
+  const updateTask = async (formData, id) => {
+  try {
+    console.log("ID:", id);
+    console.log("FormData:", formData);
+    const { data } = await taskApi.put(
+      `/tasks/${id}`,
+      formData
+    );
 
-      setTasks((prevTasks) =>
-        prevTasks.map((task) => (task._id === data._id ? data : task)),
-      );
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task._id === data._id ? data : task
+      )
+    );
 
-      setEditingTask(null);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    setEditingTask(null);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   const deleteTask = async (id) => {
     try {

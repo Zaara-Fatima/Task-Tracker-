@@ -17,6 +17,7 @@ router.post("/", protect, upload.single("image"),
   }, createTasks);
 router.get("/", protect, getTasks);
 router.put("/:id", protect, upload.single("image"), updateTask);
+
 router.delete("/:id", protect, deleteTask);
 
 export default router;
