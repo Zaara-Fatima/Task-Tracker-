@@ -1,10 +1,12 @@
+import dotenv from "dotenv"
+dotenv.config()
 import express from "express"
+
 import cors from "cors"
 import tasksRouter from "./routes/tasksRouter.js"
 import authRoutes from "./routes/authRoutes.js"
 import connectDB from "./db/db.js"
-import dotenv from "dotenv"
-dotenv.config()
+
 import cookieParser from "cookie-parser"
 import {  errorHandler } from "./middleware/errorMiddleware.js"
 

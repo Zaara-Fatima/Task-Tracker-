@@ -1,12 +1,12 @@
 export const TaskCard = ({ task, onDelete, onEdit }) => {
   return (
-    <div className="rounded-2xl bg-[#1a1d26] p-5">
+    <div className="rounded-2xl bg-[#1a1d26] p-5 border border-zinc-800 shadow-lg hover:border-violet-500/40 transition-all duration-300">
       {task.image && (
         <img
-          src={task.image}
-          alt={task.title}
-          className="h-40 w-full object-cover rounded-lg"
-        />
+  src={task.image}
+  alt={task.title}
+  className="mb-5 h-56 w-full rounded-2xl object-cover border border-zinc-800 shadow-xl shadow-black/40"
+/>
       )}
       <h3 className="text-xl font-semibold">{task.title}</h3>
 
